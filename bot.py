@@ -39,10 +39,15 @@ async def on_message(message):
     msgcontent = message.content
 
     for mention in message.mentions:
-        msgcontent = msgcontent.replace("<@!" + str(mention.id) + ">", "@" + mention.name + "#" + mention.discriminator)
+        msgcontent = msgcontent.replace("<@!" + str(mention.id) + ">", "\033[43m@" + mention.name + "#" + mention.discriminator + "\033[0m")
         if mention.id == client.user.id:
             color = "\033[43m"
 
     print(color + "#" + message.channel.name + " - " + message.author.name + "#" + str(message.author.discriminator) + bot_text + ": " + msgcontent + "\033[0m")
+
+    msgtosend = input("Message: ")
+
+    if msgtosend != "":
+        await message.channel.send(msgtosend)
 
 client.run(open('token','r').read())
